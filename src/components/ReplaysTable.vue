@@ -23,7 +23,7 @@
             v-for="player in replay.team1"
             :key="player.name">
             <a
-              :href="'https://starcraft2.com/en-us/profile/1/1/' + player.id">
+              :href="createPlayerLink(player.id)">
               {{ player.name }}
             </a>
             <span 
@@ -41,7 +41,7 @@
             v-for="player in replay.team2"
             :key="player.name">
             <a
-              :href="'https://starcraft2.com/en-us/profile/1/1/' + player.id">
+              :href="createPlayerLink(player.id)">
               {{ player.name }}
             </a>
             <span 
@@ -83,6 +83,9 @@ export default {
   methods: {
     createMapLink(mapName) {
       return 'https://liquipedia.net/starcraft2/' + mapName.split(' ').join('_');
+    },
+    createPlayerLink(id) {
+      return 'https://starcraft2.com/en-us/profile/1/1/' + id;
     }
   },
   mounted () {
@@ -91,11 +94,12 @@ export default {
       .then(res => {
         let formatedReplays = [];
         for (let replay of res.data) {
-          let formatedReplay = {};
-          formatedReplay.mapName = replay.mapName;
-          formatedReplay.date = dayjs(replay.playedAt).format('YYYY MM-DD HH:mm:ss A');
-          formatedReplay.team1 = [];
-          formatedReplay.team2 = [];
+          let formatedReplay = {
+            mapName: replay.mapName,
+            date: dayjs(replay.playedAt).format('YYYY MM-DD HH:mm:ss A'),
+            team1: [],
+            team2: []
+          };
           for (let player of replay.players) {
             if (player.teamId === 0) {
               formatedReplay.team1.push({name: player.name, race: player.race, id: player.profileId});
