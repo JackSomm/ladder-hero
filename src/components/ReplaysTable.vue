@@ -121,7 +121,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 table {
-  margin: 0 auto;
+  margin-left: 2rem;
 }
 td {
   padding: 0 10px;
@@ -136,9 +136,6 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 .race {
   font-size: .85em;
