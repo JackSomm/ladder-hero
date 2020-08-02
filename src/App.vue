@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ReplaysTable/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ReplaysTable from './components/ReplaysTable.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ReplaysTable
   }
 }
 </script>
