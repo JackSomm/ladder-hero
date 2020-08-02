@@ -3,9 +3,9 @@
         <h1>
             Ladder Hero
         </h1>
-        <h3>
+        <a>
             Login
-        </h3>
+        </a>
     </div>
 </template>
 
@@ -31,17 +31,17 @@ h1 {
     margin-top: 0;
     margin-right: 2rem;
     padding: 2rem 0 2.5rem;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     display: inline-block;
     line-height: .7em;
 }
-h3 {
+a {
     display: inline-block;
     margin: 0;
+    font-weight: 700;
 }
-h3:hover {
+a:hover {
     color: #42b955;
     cursor: pointer;
-    transition: all .3s ease;
 }
 </style>
