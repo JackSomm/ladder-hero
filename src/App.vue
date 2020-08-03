@@ -4,7 +4,7 @@
       <Header/>
       <v-main>
         <v-container fluid>
-          <ReplaysTable/>
+          <router-view/>
         </v-container>
       </v-main>
       <v-footer app>
@@ -17,13 +17,11 @@
 </template>
 
 <script>
-import ReplaysTable from './components/ReplaysTable.vue'
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    ReplaysTable,
     Header
   },
   created () {
