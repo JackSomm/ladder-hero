@@ -8,7 +8,9 @@
         </v-container>
       </v-main>
       <v-footer app>
-      
+        <a class="footer--link" href="https://github.com/JackSomm/ladder-hero" target="_blank">
+          Github
+        </a>
       </v-footer>
     </v-app>
   </div>
@@ -36,5 +38,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.footer--link {
+  text-decoration: none;
+  font-weight: 700;
 }
 </style>

@@ -93,7 +93,7 @@ export default {
       return 'https://starcraft2.com/en-us/profile/1/1/' + id;
     }
   },
-  mounted () {
+  created () {
     axios
       .get('https://ladder-hero-api.honnold.me/api/v1/replays')
       .then(res => {
