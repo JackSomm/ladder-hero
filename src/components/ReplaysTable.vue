@@ -1,8 +1,8 @@
-<template>
-  <div class="hello">
-    <table>
+<template v-slot:default>
+  <v-simple-table app>
+    <thead>
       <tr>
-        <th>
+        <th class="text-left">
           Team 1
         </th>
         <th>
@@ -15,13 +15,17 @@
           Replay Date
         </th>
       </tr>
+    </thead>
+    <tbody>
       <tr
         v-for="replay in replays"
-        :key="replay.date">
-        <td>
+        :key="replay.date"
+        class="table__row">
+        <td class="player">
           <p
             v-for="player in replay.team1"
-            :key="player.name">
+            :key="player.name"
+            class="player--name">
             <a
               :href="createPlayerLink(player.id)">
               {{ player.name }}
@@ -36,10 +40,11 @@
             </span>
           </p>
         </td>
-        <td>
+        <td class="player">
           <p
             v-for="player in replay.team2"
-            :key="player.name">
+            :key="player.name"
+            class="player--name">
             <a
               :href="createPlayerLink(player.id)">
               {{ player.name }}
@@ -64,8 +69,8 @@
           {{ replay.date }}
         </td>
       </tr>
-    </table>
-  </div>
+    </tbody>
+  </v-simple-table>
 </template>
 
 <script>
@@ -110,7 +115,6 @@ export default {
           }
           formatedReplays.push(formatedReplay);
         }
-        console.log(res.data);
         this.replays = formatedReplays;
       })
       .catch(err => console.log(err))
@@ -120,29 +124,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-table {
-  margin-left: 2rem;
-}
-td {
-  padding: 0 10px;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 .race {
   font-size: .85em;
   margin-left: 7px;
   position: relative;
   top: 5px;
-  
 }
 .ZergClass {
   color: #512062;
@@ -156,11 +142,8 @@ li {
   color: #e4a432;
   text-shadow: 1px 1px 1px #e4a432;
 }
-a {
-  color: #2c3e50;
-  text-decoration: none;
-}
-a:hover {
-  color: #42b955;
+.player--name {
+  margin-bottom: 0;
+  margin: 10px 0;
 }
 </style>

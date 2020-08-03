@@ -1,7 +1,16 @@
 <template>
   <div id="app">
-    <Header/>
-    <ReplaysTable/>
+    <v-app>
+      <Header/>
+      <v-main>
+        <v-container fluid>
+          <ReplaysTable/>
+        </v-container>
+      </v-main>
+      <v-footer app>
+      
+      </v-footer>
+    </v-app>
   </div>
 </template>
 
@@ -14,16 +23,18 @@ export default {
   components: {
     ReplaysTable,
     Header
-  }
+  },
+  created () {
+    this.$vuetify.theme.dark = true
+  },
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>
