@@ -1,25 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Replay from '../views/Replay.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'home',
+    component: () => import("../views/Home.vue")
   },
   {
     path: '/replay/:id',
-    name: 'Replay',
-    component: Replay
+    name: 'replay',
+    component: () => import("../views/Replay.vue"),
+    props: true
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

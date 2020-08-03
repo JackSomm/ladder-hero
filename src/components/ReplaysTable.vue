@@ -14,19 +14,19 @@
         <th>
           Replay Date
         </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr
+      <tr class="replay"
         v-for="replay in replays"
-        :key="replay.date"
-        class="table__row">
+        :key="replay.id">
         <td class="player">
           <p
             v-for="player in replay.team1"
             :key="player.name"
             class="player--name">
-            <a
+            <a target="_blank"
               :href="createPlayerLink(player.id)">
               {{ player.name }}
             </a>
@@ -45,7 +45,7 @@
             v-for="player in replay.team2"
             :key="player.name"
             class="player--name">
-            <a
+            <a target="_blank"
               :href="createPlayerLink(player.id)">
               {{ player.name }}
             </a>
@@ -60,7 +60,7 @@
           </p>
         </td>
         <td>
-          <a 
+          <a target="_blank"
             :href="createMapLink(replay.mapName)">
             {{ replay.mapName }}
           </a>
@@ -68,6 +68,11 @@
         <td>
           {{ replay.date }}
         </td>
+        <router-link class="replay--link"
+          tag="td"
+          :to="{ name: 'replay', params: { id: replay.id }}">
+          View Replay
+        </router-link>
       </tr>
     </tbody>
   </v-simple-table>
@@ -78,7 +83,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 
 export default {
-  name: 'HelloWorld',
+  name: 'ReplaysTable',
   data () {
     return {
       replays: null,
@@ -91,7 +96,7 @@ export default {
     },
     createPlayerLink(id) {
       return 'https://starcraft2.com/en-us/profile/1/1/' + id;
-    }
+    },
   },
   created () {
     axios
@@ -103,7 +108,8 @@ export default {
             mapName: replay.mapName,
             date: dayjs(replay.playedAt).format('YYYY MM-DD HH:mm:ss A'),
             team1: [],
-            team2: []
+            team2: [],
+            id: replay.slug
           };
           for (let player of replay.players) {
             if (player.teamId === 0) {
@@ -124,6 +130,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.replay--link {
+  cursor: pointer;
+}
+.replay:hover {
+  background-color: transparent!important;
+}
 .race {
   font-size: .85em;
   margin-left: 7px;

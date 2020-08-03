@@ -1,6 +1,8 @@
 <template>
   <v-main>
-
+    <h1>
+      {{ $route.params.id }}
+    </h1>
   </v-main>
 </template>
 
