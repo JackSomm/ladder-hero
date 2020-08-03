@@ -10,7 +10,7 @@ const routes = [
     component: () => import("../views/Home.vue")
   },
   {
-    path: '/replay/:id',
+    path: '/replay/:slug',
     name: 'replay',
     component: () => import("../views/Replay.vue"),
     props: true

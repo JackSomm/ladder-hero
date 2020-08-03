@@ -70,7 +70,7 @@
         </td>
         <router-link class="replay--link"
           tag="td"
-          :to="{ name: 'replay', params: { id: replay.id }}">
+          :to="{ name: 'replay', params: { slug: replay.id }}">
           View Replay
         </router-link>
       </tr>
@@ -143,16 +143,13 @@ export default {
   top: 5px;
 }
 .ZergClass {
-  color: #512062;
-  text-shadow: 1px 1px 1px #512062;
+  color: #b48ead;
 }
 .TerranClass {
-  color: #a95225;
-  text-shadow: 1px 1px 1px #a95225;
+  color: #d08770;
 }
 .ProtossClass {
-  color: #e4a432;
-  text-shadow: 1px 1px 1px #e4a432;
+  color: #ebcb8b;
 }
 .player--name {
   margin-bottom: 0;
