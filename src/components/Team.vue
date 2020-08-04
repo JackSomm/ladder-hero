@@ -32,12 +32,19 @@
       team: {
         type: Array,
         required: true
+      },
+      slug: {
+        type: String,
+        required: true
       }
     },
     methods: {
       createPlayerLink(id) {
         return 'https://starcraft2.com/en-us/profile/1/1/' + id;
       },
+      test() {
+        console.log(this.slug);
+      }
     }
   }
 </script>

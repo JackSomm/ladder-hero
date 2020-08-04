@@ -1,7 +1,7 @@
 <template>
-  <tr >
-    <Team :team="item.team1" />
-    <Team :team="item.team2" />
+  <tr @click="goToReplay(item.slug)">
+    <Team :team="item.team1" :slug="item.slug" />
+    <Team :team="item.team2" :slug="item.slug" />
     <td>
       <a :href="createMapLink(item.mapName)">
         {{ item.mapName }}
@@ -34,6 +34,16 @@ export default {
     createMapLink(mapName) {
       return 'https://liquipedia.net/starcraft2/' + mapName.split(' ').join('_');
     },
+    goToReplay(slug) {
+      this.$router.push({ name: 'replay', params: { slug: slug } })
+    }
   }
 }
 </script>
+
+<style scoped>
+tr {
+  cursor: pointer;
+  transition: all .3s ease;
+}
+</style>

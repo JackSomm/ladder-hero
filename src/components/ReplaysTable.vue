@@ -31,15 +31,12 @@ export default {
           sortable: false,
           value: 'team1'
         },
-        { text: 'Team 2', value: 'team2'},
-        { text: 'Map', value: 'mapName'},
-        { text: 'Replay Date', value: 'date'},
+        { text: 'Team 2', value: 'team2' },
+        { text: 'Map', value: 'mapName' },
+        { text: 'Replay Date', value: 'date' },
       ],
       replays: []
     }
-  },
-  methods: {
-
   },
   beforeCreate () {
     axios
@@ -52,7 +49,7 @@ export default {
             date: dayjs(replay.playedAt).format('YYYY MM-DD HH:mm:ss A'),
             team1: [],
             team2: [],
-            id: replay.slug
+            slug: replay.slug
           };
           for (let player of replay.players) {
             if (player.teamId === 0) {
