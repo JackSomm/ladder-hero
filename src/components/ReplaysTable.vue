@@ -4,7 +4,8 @@
       :headers="headers"
       :items="replays"
       :items-per-page="25"
-      class="elevation-1">
+      :loading="replays.length === 0"
+      class="elevation-4">
       <template v-slot:item="{ item }">
         <ReplayRow :item="item" />
       </template>
@@ -34,6 +35,7 @@ export default {
         { text: 'Team 2', value: 'team2' },
         { text: 'Map', value: 'mapName' },
         { text: 'Replay Date', value: 'date' },
+        { text: '', value: 'details' },
       ],
       replays: []
     }

@@ -1,17 +1,24 @@
 <template>
-  <tr @click="goToReplay(item.slug)">
+  <tr>
     <Team :team="item.team1" :slug="item.slug" />
     <Team :team="item.team2" :slug="item.slug" />
     <td>
-      <a :href="createMapLink(item.mapName)">
+      <a :href="createMapLink(item.mapName)"
+        class="replay--map">
         {{ item.mapName }}
       </a>
     </td>
     <td>{{ item.date }}</td>
+    <router-link
+      tag="td"
+      :to="{ name: 'replay', params: { slug: item.slug } }"
+      class="replay--details">
+      View Details
+    </router-link>
   </tr>
 </template>
 
-<script>
+<script scoped>
 import Team from './Team.vue'
 
 export default {
@@ -27,22 +34,20 @@ export default {
   },
   data() {
     return {
-
+      router: this.$router
     }
   },
   methods: {
     createMapLink(mapName) {
       return 'https://liquipedia.net/starcraft2/' + mapName.split(' ').join('_');
     },
-    goToReplay(slug) {
-      this.$router.push({ name: 'replay', params: { slug: slug } })
-    }
-  }
+  },
 }
 </script>
 
 <style scoped>
-tr {
+.replay--details:hover, .replay--map:hover {
+  color: #a3be8c;
   cursor: pointer;
   transition: all .3s ease;
 }

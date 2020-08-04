@@ -72,4 +72,8 @@
 .player--name a {
   text-decoration: none;
 }
+.player--name a:hover {
+  color: #a3be8c;
+  transition: all .3s ease;
+}
 </style>
