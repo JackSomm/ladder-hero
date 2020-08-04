@@ -6,7 +6,7 @@
       :items-per-page="25"
       :loading="replays.length === 0"
       class="elevation-4">
-      <template v-slot:item="{ item }">
+      <template #item="{ item }">
         <ReplayRow :item="item" />
       </template>
     </v-data-table>

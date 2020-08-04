@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="replay">
     <Team :team="item.team1" :slug="item.slug" />
     <Team :team="item.team2" :slug="item.slug" />
     <td>
@@ -46,6 +46,9 @@ export default {
 </script>
 
 <style scoped>
+.replay {
+  transition: all .3s ease;
+}
 .replay--details:hover, .replay--map:hover {
   color: #a3be8c;
   cursor: pointer;

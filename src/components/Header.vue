@@ -10,7 +10,8 @@
     <v-navigation-drawer
       v-model="drawer"
       temporary
-      absolute>
+      absolute
+      app>
       <router-link to="/">
         <v-list-item
           link>
