@@ -46,7 +46,7 @@
 }
 .v-application a {
   text-decoration: none;
-  color: #fff;
+  color: #d8dee9;
   transition: all .3s ease;
 }
 .v-application a:hover {

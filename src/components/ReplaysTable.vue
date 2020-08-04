@@ -1,104 +1,47 @@
 <template v-slot:default>
-  <v-simple-table app>
-    <thead>
-      <tr>
-        <th class="text-left">
-          Team 1
-        </th>
-        <th>
-          Team 2
-        </th>
-        <th>
-          Map
-        </th>
-        <th>
-          Replay Date
-        </th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="replay"
-        v-for="replay in replays"
-        :key="replay.id">
-        <td class="player">
-          <p
-            v-for="player in replay.team1"
-            :key="player.name"
-            class="player--name">
-            <a target="_blank"
-              :href="createPlayerLink(player.id)">
-              {{ player.name }}
-            </a>
-            <span 
-              :class="[
-                raceClass,
-                player.race + 'Class'
-              ]"
-              >
-              {{ player.race }}
-            </span>
-          </p>
-        </td>
-        <td class="player">
-          <p
-            v-for="player in replay.team2"
-            :key="player.name"
-            class="player--name">
-            <a target="_blank"
-              :href="createPlayerLink(player.id)">
-              {{ player.name }}
-            </a>
-            <span 
-              :class="[
-                raceClass,
-                player.race + 'Class'
-              ]"
-              >
-              {{ player.race }}
-            </span>
-          </p>
-        </td>
-        <td>
-          <a target="_blank"
-            :href="createMapLink(replay.mapName)">
-            {{ replay.mapName }}
-          </a>
-        </td>
-        <td>
-          {{ replay.date }}
-        </td>
-        <router-link class="replay--link"
-          tag="td"
-          :to="{ name: 'replay', params: { slug: replay.id }}">
-          View Replay
-        </router-link>
-      </tr>
-    </tbody>
-  </v-simple-table>
+  <div>
+    <v-data-table
+      :headers="headers"
+      :items="replays"
+      :items-per-page="25"
+      class="elevation-1">
+      <template v-slot:item="{ item }">
+        <ReplayRow :item="item" />
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import dayjs from 'dayjs'
+import ReplayRow from './ReplayRow.vue'
 
 export default {
   name: 'ReplaysTable',
+  components: {
+    ReplayRow
+  },
   data () {
     return {
-      replays: null,
-      raceClass: 'race',
+      headers: [
+        {
+          text: 'Team 1',
+          align: 'start',
+          sortable: false,
+          value: 'team1'
+        },
+        { text: 'Team 2', value: 'team2'},
+        { text: 'Map', value: 'mapName'},
+        { text: 'Replay Date', value: 'date'},
+      ],
+      replays: []
     }
   },
   methods: {
-    createMapLink(mapName) {
-      return 'https://liquipedia.net/starcraft2/' + mapName.split(' ').join('_');
-    },
-    createPlayerLink(id) {
-      return 'https://starcraft2.com/en-us/profile/1/1/' + id;
-    },
+
   },
-  created () {
+  beforeCreate () {
     axios
       .get('https://ladder-hero-api.honnold.me/api/v1/replays')
       .then(res => {
@@ -130,29 +73,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.replay--link {
-  cursor: pointer;
-}
-.replay:hover {
-  background-color: transparent!important;
-}
-.race {
-  font-size: .85em;
-  margin-left: 7px;
-  position: relative;
-  top: 5px;
-}
-.ZergClass {
-  color: #b48ead;
-}
-.TerranClass {
-  color: #d08770;
-}
-.ProtossClass {
-  color: #ebcb8b;
-}
-.player--name {
-  margin-bottom: 0;
-  margin: 10px 0;
+.theme--dark.v-data-table {
+  background-color: transparent;
 }
 </style>
