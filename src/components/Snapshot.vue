@@ -1,6 +1,5 @@
 <template>
-  <v-carousel-item
-    app>
+  <v-carousel-item>
     <p>
       Lost Minerals: {{ data.lostMinerals}}, Lost Vespene: {{ data.lostVespene}}
     </p>

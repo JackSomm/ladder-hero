@@ -1,48 +1,27 @@
 <template>
   <v-container>
     <v-row>
-      <v-col
-        v-for="(team, i) in groupTeams"
-        :key="i">
-        <v-row
-          v-for="player in team"
-          :key="player.profileId"
-          justify="center">
-          <v-card
-            elevation="3">
-            <h1>
-              {{ player.name }}
-            </h1>
-            <v-carousel
-              :continuous="false"
-              :show-arrows="true"
-              show-arrows-on-hover
-              height="210"
-              cycle
-              hide-delimiters
-              progress>
-              <Snapshot 
-                v-for="(snapshot, i) in player.snapshots"
-                :key="i"
-                :data="snapshot"/>
-            </v-carousel>
-          </v-card>
-        </v-row>
-      </v-col>
+      <div class="col team"
+        v-for="(team, i) in teamsObject"
+        :key="i"
+        @click="swapTeam(team)">
+        <h1>Team {{ i + 1 }}</h1> 
+      </div>
     </v-row>
+    <TeamData :team="currentTeam" />
   </v-container>
 </template>
 
 <script>
   import axios from 'axios'
-  import Snapshot from '../components/Snapshot.vue'
+  import TeamData from '../components/TeamData.vue'
   import groupBy from 'lodash/groupBy'
   import values from 'lodash/values'
 
   export default {
     name: 'Replay',
     components: {
-      Snapshot
+      TeamData
     },
     props: {
       slug: {
@@ -52,48 +31,42 @@
     },
     data () {
       return {
-        players: []
+        teamsObject: [],
+        currentTeam: []
+      }
+    },
+    methods: {
+      swapTeam(team) {
+        this.currentTeam = team;
       }
     },
     mounted() {
-      axios
-        .get(`https://ladder-hero-api.honnold.me/api/v1/replays/${this.slug}`)
-        .then(res => this.players = res.data.players)
-        .catch(err => console.log(err))
-    },
-    computed: {
-      groupTeams: function() {
-        const teamsObject = groupBy(this.players, 'teamId');
-        console.log(values(teamsObject));
-        return values(teamsObject);
-      }
+      axios.get(`https://ladder-hero-api.honnold.me/api/v1/replays/${this.slug}`)
+        .then((res) => {
+          const players = res.data.players;
+          this.teamsObject = values(groupBy(players, 'teamId'));
+          this.currentTeam = this.teamsObject[0];
+        })
+        .catch(err => console.log(err));
     }
   }
 </script>
 
 <style scoped>
-h1 {
+h1, h2 {
   margin-bottom: 20px;
+  color: #d8dee9;
 }
-.v-card {
-  margin: 1rem;
-  padding: 2rem;
+.col {
   text-align: center;
-  background-color: #434c5e;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
 }
-.v-window__container {
-  height: auto!important;
+.team {
+  cursor: pointer;
 }
-</style>
-<style>
-.v-window__next, .v-window__prev {
-  top: calc(33% - 20px);
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
-.v-card {
-  height: 100%;
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
