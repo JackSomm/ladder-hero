@@ -9,10 +9,13 @@
         <TeamData :team="team" />
       </div>
     </v-row>
+    <div>
+      <chart-select @selected="selectChart" />
+    </div>
     <div class="chart-wrap">
       <line-chart
         v-if="!loading"
-        :data="chartStats"
+        :data="changeChartData"
         :options="chartOptions"/>
     </div>
   </v-container>
@@ -22,16 +25,19 @@
   import axios from 'axios'
   import TeamData from '../components/TeamData.vue'
   import LineChart from '../components/LineChart.vue'
+  import ChartSelect from '../components/ChartSelect.vue'
   import groupBy from 'lodash/groupBy'
   import values from 'lodash/values'
   import sortBy from 'lodash/sortBy'
   import map from 'lodash/map'
+  import reduce from 'lodash/reduce'
 
   export default {
     name: 'Replay',
     components: {
       TeamData,
-      LineChart
+      LineChart,
+      ChartSelect
     },
     props: {
       slug: {
@@ -41,14 +47,11 @@
     },
     data () {
       return {
+        players: [],
+        selectedChart: ['armyValueMinerals'],
         teamsObject: [],
         chartStats: {},
         chartOptions: {
-          title: {
-            display: true,
-            text: 'Army Value in Minerals',
-            fontSize: 34
-          },
           maintainAspectRatio: false,
           scales: {
             yAxes: [{
@@ -78,29 +81,42 @@
     methods: {
       swapTeam(team) {
         this.currentTeam = team;
-      }
+      },
+      selectChart(v) {
+        this.selectedChart = v;
+      },
     },
     mounted() {
       axios.get(`https://ladder-hero-api.honnold.me/api/v1/replays/${this.slug}`)
         .then((res) => {
           this.teamsObject = values(groupBy(res.data.players, 'teamId'));
-          
-          this.chartStats.labels = map(sortBy(res.data.players[0].snapshots, ['loop']), 'loop');
-          const orderedPlayers = sortBy(res.data.players, ['teamId']);
-          this.chartStats.datasets = map(orderedPlayers, (p, i) => {
-            let sortedSnapshots = sortBy(p.snapshots, ['loop']);
-            return {
-              label: p.name,
-              data: map(sortedSnapshots, s => s.armyValueMinerals + s.armyValueVespene),
-              borderColor: this.colors[p.teamId][i % 4],
-              backgroundColor: "rgba(0, 0, 0, 0)",
-              pointRadius: 0,
-            }
-          });
-          
+          this.players = res.data.players;
+
           this.loading = false;
         })
         .catch(err => console.log(err));
+    },
+    computed: {
+      changeChartData: function() {
+        const chartStats = {};
+        chartStats.labels = map(sortBy(this.players[0].snapshots, ['loop']), 'loop');
+        const orderedPlayers = sortBy(this.players, ['teamId']);
+        chartStats.datasets = map(orderedPlayers, (p, i) => {
+          let sortedSnapshots = sortBy(p.snapshots, ['loop']);
+          return {
+            label: p.name,
+            data: map(sortedSnapshots, s => {
+              return reduce(this.selectedChart, (sum, n) => { 
+                return sum + s[n];
+              }, 0);
+            }),
+            borderColor: this.colors[p.teamId][i % 4],
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            pointRadius: 0,
+          }
+        });
+        return chartStats;
+      }
     }
   }
 </script>

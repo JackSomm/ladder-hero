@@ -19,6 +19,12 @@
     },
     data () {
       return {}
+    },
+    watch: {
+      data: function() {
+        this.$data._chart.destroy();
+        this.renderChart(this.data, this.options);
+      }
     }
   }
 </script>
