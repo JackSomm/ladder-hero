@@ -14,10 +14,9 @@
       <v-list-item
         v-for="(option, i) in options"
         :key="i"
-        v-ripple>
-        <v-list-item-title
-          :value="option.value"
-          @click="$emit('selected', option.value); changeCurrent(option.title)">
+        v-ripple
+        @click="$emit('selected', option.value); changeCurrent(option.title);">
+        <v-list-item-title>
           {{ option.title }}
         </v-list-item-title>
       </v-list-item>
@@ -90,6 +89,7 @@ export default {
   methods: {
     changeCurrent(str) {
       this.current = str;
+      console.log('clicked')
     }
   }
 }

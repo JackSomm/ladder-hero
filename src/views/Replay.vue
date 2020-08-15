@@ -115,6 +115,7 @@
             pointRadius: 0,
           }
         });
+        console.log(chartStats);
         return chartStats;
       }
     }
