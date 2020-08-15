@@ -4,7 +4,7 @@
       <div 
         class="col overall"
         v-if="team.length > 1">
-        <div class="title">
+        <div class="player__name">
           <h4>
             Overall
           </h4>
@@ -105,16 +105,17 @@
 
 <style scoped>
 h4, h5, p {
-  color: #d8dee9;
   margin-bottom: 0;
 }
 h4, h5 {
   display: inline-block;
+  color: #e5e9f0;
 }
 p {
   display: block;
   font-size: .9rem;
   font-weight: 700;
+  color: #d8dee9;
 }
 h4 {
   margin-bottom: 1em;
@@ -126,18 +127,19 @@ h5 {
 }
 .team {
   border: 1px solid #d8dee9;
-  background-color: #2e3439;
+  background-color: #263238;
   box-shadow: 1px 3px 4px #000;
 }
 .row {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 .col {
   text-align: center;
 }
-.player--item {
-  margin-bottom: 5px;
+.player--item, .overall--item {
+  margin-bottom: 7px;
+  line-height: 1.1em;
 }
 </style>
