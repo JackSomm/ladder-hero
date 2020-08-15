@@ -126,9 +126,9 @@ h5 {
   font-weight: 400;
 }
 .team {
-  border: 1px solid #d8dee9;
-  background-color: #263238;
-  box-shadow: 1px 3px 4px #000;
+  border-radius: 6px;
+  background-color: #3b4252;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .row {
   display: flex;

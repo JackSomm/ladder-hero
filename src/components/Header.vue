@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-app-bar app
+    <v-app-bar 
+      app
       collapse-on-scroll>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <router-link to="/" class="header--link">
@@ -10,8 +11,17 @@
     <v-navigation-drawer
       v-model="drawer"
       temporary
-      absolute
       app>
+      <router-link 
+        to="/"
+        v-show="top">
+        <v-list-item
+          link>
+          <v-list-item-content>
+            Home
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
       <router-link to="/">
         <v-list-item
           link>
@@ -29,7 +39,21 @@
     name: 'Header',
     data () {
       return {
-        drawer: false
+        drawer: false,
+        top: true
+      }
+    },
+    mounted() {
+      window.addEventListener("scroll", this.onScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener("scroll", this.onScroll);
+    },
+    methods: {
+      onScroll() {
+        if (window.scrollY !== 0) {
+          this.top = false;
+        }
       }
     },
     watch: {
