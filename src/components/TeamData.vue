@@ -89,7 +89,7 @@
         overall: {}
       }
     },
-    mounted() {
+    created() {
       this.team.forEach(p => {
         for (let [key, value] of Object.entries(p)) {
           if (this.overall[key]) {
