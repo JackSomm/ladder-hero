@@ -1,18 +1,29 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col
+  <v-container class="team">
+    <div class="row">
+      <div 
+        class="col"
+        v-if="team.length > 1">
+        <h4>
+          Overall
+        </h4>
+      </div>
+      <div class="col player"
         v-for="player in team"
         :key="player.playerId">
-        <h2>
-          {{ player.name }}
-        </h2>
-      </v-col>
-    </v-row>
+        <div class="player__name">
+          <h4>
+            {{ player.name }}
+          </h4>
+        </div>
+      </div>
+    </div>
   </v-container>
 </template>
 
 <script>
+  import { Line } from 'vue-chartjs'
+
   export default {
     name: 'TeamData',
     props: {
@@ -20,36 +31,30 @@
         required: true
       }
     },
+    extends: Line,
     data () {
-      return {}
-    },
-    watch: {
-      'team': function(newVal, oldVal)  {
-        console.log(newVal, oldVal);
+      return {
       }
-    }
+    },
   }
 </script>
 
 <style scoped>
-h2 {
-  margin-bottom: 20px;
+h4 {
   color: #d8dee9;
-  position: static;
-}
-.list-item {
   display: inline-block;
-  margin-right: 10px;
 }
-.list-enter-active, .list-leave-active {
-  transition: all 1s;
+.team {
+  border: 1px solid #d8dee9;
+  background-color: #2e3439;
+  box-shadow: 1px 3px 4px #000;
 }
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  position: absolute;
-  transform: translateX(100vw);
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.list-enter {
-  top: 0;
+.col {
+  text-align: center;
 }
 </style>
