@@ -9,10 +9,12 @@
         <TeamData :team="team" />
       </div>
     </v-row>
-    <line-chart
-      v-if="!loading"
-      :data="chartStats"
-      :options="chartOptions"/>
+    <div class="chart-wrap">
+      <line-chart
+        v-if="!loading"
+        :data="chartStats"
+        :options="chartOptions"/>
+    </div>
   </v-container>
 </template>
 
@@ -46,23 +48,30 @@
             display: true,
             text: 'Army Value in Minerals',
             fontSize: 34
-        },
+          },
+          maintainAspectRatio: false,
           scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
           }
         },
         loading: true,
         colors: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          [
+            'rgba(255, 138, 128, 1)',
+            'rgba(255, 82, 82, 1)',
+            'rgba(255, 23, 68, 1)',
+            'rgba(213, 0, 0, 1)'
+          ],
+          [
+            'rgba(130, 177, 255, 1)',
+            'rgba(68, 138, 255, 1)',
+            'rgba(41, 121, 255, 1)',
+            'rgba(41, 98, 255, 1)'
+          ],
         ]
       }
     },
@@ -77,12 +86,15 @@
           this.teamsObject = values(groupBy(res.data.players, 'teamId'));
           
           this.chartStats.labels = map(sortBy(res.data.players[0].snapshots, ['loop']), 'loop');
-          this.chartStats.datasets = map(res.data.players, (p, i) => {
+          const orderedPlayers = sortBy(res.data.players, ['teamId']);
+          this.chartStats.datasets = map(orderedPlayers, (p, i) => {
             let sortedSnapshots = sortBy(p.snapshots, ['loop']);
             return {
               label: p.name,
-              data: map(sortedSnapshots, 'armyValueMinerals'),
-              borderColor: this.colors[i]
+              data: map(sortedSnapshots, s => s.armyValueMinerals + s.armyValueVespene),
+              borderColor: this.colors[p.teamId][i % 4],
+              backgroundColor: "rgba(0, 0, 0, 0)",
+              pointRadius: 0,
             }
           });
           
@@ -100,5 +112,10 @@ h2, h3 {
 }
 .col {
   text-align: center;
+}
+.chart-wrap {
+  width: 100%;
+  height: 32rem;
+  overflow: hidden;
 }
 </style>
