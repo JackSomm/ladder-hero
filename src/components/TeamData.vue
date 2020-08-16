@@ -31,7 +31,7 @@
         <div class="player__data">
           <div
             class="player--item"
-            v-for="(stat, i) in playerStats"
+            v-for="(stat, i) in organizePlayerStats(player)"
             :key="i"
             v-show="i !== 'name' || i !== 'teamId'">
             <p>{{ i }}</p>
@@ -70,21 +70,15 @@
           'Avg. Mineral Collection Rate',
           'Avg. Vespene Collection Rate',
         ],
-        overall: {},
-        playerStats: {}
+        overall: {}
       }
     },
-    mounted() {
-      this.team.forEach(player => {
-        let playerStats = {...player};
-
-        for (let [key, value] of Object.entries(player)) {
+    methods: {
+      organizePlayerStats(player) {
+        let playerStats = { ...player };
+        for (let [key] of Object.entries(playerStats)) {
           if (this.stats.indexOf(key) > -1) {
-            if (this.overall[key]) {
-              this.overall[key] += value;
-            } else {
-              this.overall[key] = value;
-            }
+            continue;
           } else {
             delete playerStats[key];
           }
@@ -93,9 +87,22 @@
           playerStats[this.titles[i]] = playerStats[this.stats[i]];
           delete playerStats[this.stats[i]];
         }
-
-        this.playerStats = playerStats;
+        return playerStats;
+      }
+    },
+    created() {
+      this.team.forEach(player => {
+        for (let [key, value] of Object.entries(player)) {
+          if (this.stats.indexOf(key) > -1) {
+            if (this.overall[key]) {
+              this.overall[key] += value;
+            } else {
+              this.overall[key] = value;
+            }
+          }
+        }
       });
+
       for (let i in this.titles) {
         this.overall[this.titles[i]] = this.overall[this.stats[i]];
         delete this.overall[this.stats[i]];
