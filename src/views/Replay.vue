@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <h1>
+      {{ mapName }}
+    </h1>
     <v-row>
       <div 
         class="col team"
@@ -47,6 +50,7 @@
     },
     data () {
       return {
+        mapName: '',
         players: [],
         selectedChart: ['armyValueMinerals'],
         teamsObject: [],
@@ -91,7 +95,7 @@
         .then((res) => {
           this.teamsObject = values(groupBy(res.data.players, 'teamId'));
           this.players = res.data.players;
-
+          this.mapName = res.data.mapName;
           this.loading = false;
         })
         .catch(err => console.log(err));
@@ -102,6 +106,7 @@
         chartStats.labels = map(sortBy(this.players[0].snapshots, ['loop']), 'loop');
         const orderedPlayers = sortBy(this.players, ['teamId']);
         chartStats.datasets = map(orderedPlayers, (p, i) => {
+          console.log(p);
           let sortedSnapshots = sortBy(p.snapshots, ['loop']);
           return {
             label: p.name,
@@ -115,7 +120,6 @@
             pointRadius: 0,
           }
         });
-        console.log(chartStats);
         return chartStats;
       }
     }
@@ -123,11 +127,11 @@
 </script>
 
 <style scoped>
-h2, h3 {
-  padding: 20px 0;
+h1, h2, h3 {
+  padding: 10px 0;
   color: #d8dee9;
 }
-.col {
+h1, .col {
   text-align: center;
 }
 .chart-wrap {

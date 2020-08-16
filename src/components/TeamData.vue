@@ -10,64 +10,31 @@
           </h4>
         </div>
         <div class="overall__data">
-          <div class="overall--item">
-            <p>Collected Minerals</p>
-            <h5>{{ overall.collectedMinerals }}</h5>
-          </div>
-          <div class="overall--item">
-            <p>Collected Vespene</p>
-            <h5>{{ overall.collectedVespene }}</h5>
-          </div>
-          <div class="overall--item">
-            <p>Avg. Unspent Minerals</p>
-            <h5>{{ overall.avgUnspentMinerals }}</h5>
-          </div>
-          <div class="overall--item">
-            <p>Avg. Unspent Vespene</p>
-            <h5>{{ overall.avgUnspentVespene }}</h5>
-          </div>
-          <div class="overall--item">
-            <p>Avg. Mineral Collection Rate</p>
-            <h5>{{ overall.avgCollectionRateMinerals }}</h5>
-          </div>
-          <div class="overall--item">
-            <p>Avg. Vespene Collection Rate</p>
-            <h5>{{ overall.avgCollectionRateVespene }}</h5>
+          <div 
+            class="overall--item"
+            v-for="(stat, i) of overall"
+            :key="i">
+            <p>{{ i }}</p>
+            <h5>{{ stat }}</h5>
           </div>
         </div>
       </div>
       <div class="col player"
         v-for="player in team"
-        :key="player.playerId">
+        :key="player.name">
         <div class="player__name">
           <h4>
             {{ player.name }}
           </h4>
         </div>
         <div class="player__data">
-          <div class="player--item">
-            <p>Collected Minerals</p>
-            <h5>{{ player.collectedMinerals }}</h5>
-          </div>
-          <div class="player--item">
-            <p>Collected Vespene</p>
-            <h5>{{ player.collectedVespene }}</h5>
-          </div>
-          <div class="player--item">
-            <p>Avg. Unspent Minerals</p>
-            <h5>{{ player.avgUnspentMinerals }}</h5>
-          </div>
-          <div class="player--item">
-            <p>Avg. Unspent Vespene</p>
-            <h5>{{ player.avgUnspentVespene }}</h5>
-          </div>
-          <div class="player--item">
-            <p>Avg. Mineral Collection Rate</p>
-            <h5>{{ player.avgCollectionRateMinerals }}</h5>
-          </div>
-          <div class="player--item">
-            <p>Avg. Vespene Collection Rate</p>
-            <h5>{{ player.avgCollectionRateVespene }}</h5>
+          <div
+            class="player--item"
+            v-for="(stat, i) in player"
+            :key="i"
+            v-show="i !== 'name'">
+            <p>{{ i }}</p>
+            <h5>{{ stat }}</h5>
           </div>
         </div>
       </div>
@@ -86,19 +53,48 @@
     },
     data () {
       return {
+        stats: [
+          'collectedMinerals',
+          'collectedVespene',
+          'avgUnspentMinerals',
+          'avgUnspentVespene',
+          'avgCollectionRateMinerals',
+          'avgCollectionRateVespene'
+        ],
+        titles: [
+          'Collected Minerals',
+          'Collected Vespene',
+          'Avg. Unspent Minerals',
+          'Avg. Unspent Vespene',
+          'Avg. Mineral Collection Rate',
+          'Avg. Vespene Collection Rate'
+        ],
         overall: {}
       }
     },
     created() {
       this.team.forEach(p => {
         for (let [key, value] of Object.entries(p)) {
-          if (this.overall[key]) {
-            this.overall[key] += value;
-          } else {
-            this.overall[key] = value;
+          if (this.stats.indexOf(key) > -1) {
+            if (this.overall[key]) {
+              this.overall[key] += value;
+            } else {
+              this.overall[key] = value;
+            }
+          } else if (p[key] !== p['name']) {
+            delete p[key];
           }
         }
+        for (let i in this.titles) {
+          if (p[this.stats[i]] !== p['name'])
+            p[this.titles[i]] = p[this.stats[i]];
+            delete p[this.stats[i]];
+        }
       });
+      for (let i in this.titles) {
+        this.overall[this.titles[i]] = this.overall[this.stats[i]];
+        delete this.overall[this.stats[i]];
+      }
     }
   }
 </script>

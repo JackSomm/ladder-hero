@@ -14,7 +14,7 @@
       app>
       <router-link 
         to="/"
-        v-show="top">
+        v-show="!top">
         <v-list-item
           link>
           <v-list-item-content>
@@ -53,6 +53,8 @@
       onScroll() {
         if (window.scrollY !== 0) {
           this.top = false;
+        } else {
+          this.top = true;
         }
       }
     },

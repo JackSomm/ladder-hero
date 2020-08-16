@@ -89,7 +89,6 @@ export default {
   methods: {
     changeCurrent(str) {
       this.current = str;
-      console.log('clicked')
     }
   }
 }
