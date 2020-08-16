@@ -13,7 +13,8 @@
           <div 
             class="overall--item"
             v-for="(stat, i) of overall"
-            :key="i">
+            :key="i"
+            v-show="i !== 'name' || i !== 'teamId'">
             <p>{{ i }}</p>
             <h5>{{ stat }}</h5>
           </div>
@@ -30,9 +31,9 @@
         <div class="player__data">
           <div
             class="player--item"
-            v-for="(stat, i) in player"
+            v-for="(stat, i) in playerStats"
             :key="i"
-            v-show="i !== 'name'">
+            v-show="i !== 'name' || i !== 'teamId'">
             <p>{{ i }}</p>
             <h5>{{ stat }}</h5>
           </div>
@@ -67,29 +68,33 @@
           'Avg. Unspent Minerals',
           'Avg. Unspent Vespene',
           'Avg. Mineral Collection Rate',
-          'Avg. Vespene Collection Rate'
+          'Avg. Vespene Collection Rate',
         ],
-        overall: {}
+        overall: {},
+        playerStats: {}
       }
     },
-    created() {
-      this.team.forEach(p => {
-        for (let [key, value] of Object.entries(p)) {
+    mounted() {
+      this.team.forEach(player => {
+        let playerStats = {...player};
+
+        for (let [key, value] of Object.entries(player)) {
           if (this.stats.indexOf(key) > -1) {
             if (this.overall[key]) {
               this.overall[key] += value;
             } else {
               this.overall[key] = value;
             }
-          } else if (p[key] !== p['name']) {
-            delete p[key];
+          } else {
+            delete playerStats[key];
           }
         }
         for (let i in this.titles) {
-          if (p[this.stats[i]] !== p['name'])
-            p[this.titles[i]] = p[this.stats[i]];
-            delete p[this.stats[i]];
+          playerStats[this.titles[i]] = playerStats[this.stats[i]];
+          delete playerStats[this.stats[i]];
         }
+
+        this.playerStats = playerStats;
       });
       for (let i in this.titles) {
         this.overall[this.titles[i]] = this.overall[this.stats[i]];

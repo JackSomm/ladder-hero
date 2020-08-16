@@ -104,10 +104,11 @@
       changeChartData: function() {
         const chartStats = {};
         chartStats.labels = map(sortBy(this.players[0].snapshots, ['loop']), 'loop');
+        
         const orderedPlayers = sortBy(this.players, ['teamId']);
         chartStats.datasets = map(orderedPlayers, (p, i) => {
-          console.log(p);
           let sortedSnapshots = sortBy(p.snapshots, ['loop']);
+          
           return {
             label: p.name,
             data: map(sortedSnapshots, s => {
@@ -120,6 +121,7 @@
             pointRadius: 0,
           }
         });
+        
         return chartStats;
       }
     }
