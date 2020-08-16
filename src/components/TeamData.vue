@@ -13,8 +13,7 @@
           <div 
             class="overall--item"
             v-for="(stat, i) of overall"
-            :key="i"
-            v-show="i !== 'name' || i !== 'teamId'">
+            :key="i">
             <p>{{ i }}</p>
             <h5>{{ stat }}</h5>
           </div>
@@ -32,8 +31,7 @@
           <div
             class="player--item"
             v-for="(stat, i) in organizePlayerStats(player)"
-            :key="i"
-            v-show="i !== 'name' || i !== 'teamId'">
+            :key="i">
             <p>{{ i }}</p>
             <h5>{{ stat }}</h5>
           </div>
@@ -76,6 +74,7 @@
     methods: {
       organizePlayerStats(player) {
         let playerStats = { ...player };
+
         for (let [key] of Object.entries(playerStats)) {
           if (this.stats.indexOf(key) > -1) {
             continue;
@@ -83,10 +82,12 @@
             delete playerStats[key];
           }
         }
+
         for (let i in this.titles) {
           playerStats[this.titles[i]] = playerStats[this.stats[i]];
           delete playerStats[this.stats[i]];
         }
+
         return playerStats;
       }
     },
