@@ -9,7 +9,7 @@
         v-for="(team, i) in teamsObject"
         :key="i">
         <h3>Team {{ i + 1 }}</h3>
-        <TeamData :team="team" />
+        <TeamCol :team="team" />
       </div>
     </v-row>
     <div>
@@ -26,7 +26,7 @@
 
 <script>
   import axios from 'axios'
-  import TeamData from '../components/TeamData.vue'
+  import TeamCol from '../components/TeamCol.vue'
   import LineChart from '../components/LineChart.vue'
   import ChartSelect from '../components/ChartSelect.vue'
   import groupBy from 'lodash/groupBy'
@@ -38,7 +38,7 @@
   export default {
     name: 'Replay',
     components: {
-      TeamData,
+      TeamCol,
       LineChart,
       ChartSelect
     },
@@ -131,7 +131,7 @@
 <style scoped>
 h1, h2, h3 {
   padding: 10px 0;
-  color: #d8dee9;
+  color: #f7f7f7;
 }
 h1, .col {
   text-align: center;

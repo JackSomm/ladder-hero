@@ -1,6 +1,6 @@
 // Globals
 $body-font-family: 'Roboto', serif;
-$border-radius-root: 6px;
+$border-radius-root: 0;
 $font-size-root: 17px;
 
 // Variables must come before the import
@@ -29,7 +29,10 @@ $headings: (
 );
 
 $material-dark: (
-  'background': #2e3440,
-  'app-bar': #3b4252,
-  'navigation-drawer': #4c566a,
+  'background': #253858,
+  'navigation-drawer': #3a5179,
+  'cards': #253858,
+  'table': (
+    'hover': #703a7a,
+  )
 )

@@ -1,5 +1,6 @@
 <template>
-  <v-container class="team">
+  <v-container class="team"
+    :class="{ 'winner': team[0].didWin }">
     <div class="row">
       <div 
         class="col overall"
@@ -20,6 +21,7 @@
         </div>
       </div>
       <div class="col player"
+        :class="{ 'winner': player.didWin }"
         v-for="player in team"
         :key="player.name">
         <div class="player__name">
@@ -44,7 +46,7 @@
 <script>
 
   export default {
-    name: 'TeamData',
+    name: 'TeamCol',
     props: {
       team: {
         required: true
@@ -124,7 +126,7 @@ p {
   display: block;
   font-size: .9rem;
   font-weight: 700;
-  color: #d8dee9;
+  color: #f7f7f7;
 }
 h4 {
   margin-bottom: 1em;
@@ -134,10 +136,14 @@ h5 {
   flex: 1;
   font-weight: 400;
 }
+div.winner {
+  background-color: #2d6832;
+}
 .team {
-  border-radius: 6px;
-  background-color: #3b4252;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  background-color: #253858;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+              0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+              0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .row {
   display: flex;

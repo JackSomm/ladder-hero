@@ -22,7 +22,15 @@
           </v-list-item-content>
         </v-list-item>
       </router-link>
-      <router-link to="/">
+      <router-link to="/upload">
+        <v-list-item
+          link>
+          <v-list-item-content>
+            Upload
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
+      <router-link to="/login">
         <v-list-item
           link>
           <v-list-item-content>
@@ -78,5 +86,8 @@
 }
 .v-application a:hover {
   color: var(--v-anchor-base)!important;
+}
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+  background-color: #253858;
 }
 </style>

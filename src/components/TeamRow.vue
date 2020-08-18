@@ -54,23 +54,26 @@
   top: 5px;
 }
 .ZergClass {
-  color: #b48ead;
+  color: #b652a3;
 }
 .TerranClass {
-  color: #d08770;
+  color: #e4623a;
 }
 .ProtossClass {
-  color: #ebcb8b;
+  color: #f0af2d;
 }
 .player--name {
   margin-bottom: 0;
   margin: 10px 0;
 }
+.player--name {
+  width: 13em;
+}
 .player--name a {
   text-decoration: none;
 }
 .player--name a:hover {
-  color: #a3be8c;
+  color: #32d082;
   transition: all .3s ease;
 }
 </style>

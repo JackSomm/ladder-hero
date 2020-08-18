@@ -4,7 +4,7 @@
     <template
       #activator="{ on, attrs }">
       <v-btn
-        color="secondary"
+        color="#7f428b"
         v-on="on"
         v-bind="attrs">
         {{ current }}
@@ -98,10 +98,11 @@ export default {
 .v-btn {
   text-transform: none;
   font-size: 0.929rem;
+  border-radius: 0;
   min-height: 48px;
 }
 .v-list.v-sheet {
-  background-color: #5e81ac;
+  background-color: #253858;
 }
 .v-list-item {
   cursor: pointer;

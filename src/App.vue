@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <v-app>
-      <Header/>
+      <Header
+        v-if="$route.name !== 'home'"/>
       <v-main>
         <v-container fluid>
           <router-view/>
@@ -25,7 +26,7 @@ export default {
     Header
   },
   created () {
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = true;
   },
 }
 </script>
@@ -35,7 +36,8 @@ export default {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #f7f7f7;
+  background-color: #232e41;
 }
 .footer--link {
   text-decoration: none;

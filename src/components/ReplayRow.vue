@@ -1,14 +1,19 @@
 <template>
-  <tr class="replay">
-    <Team :team="item.team1" :slug="item.slug" />
-    <Team :team="item.team2" :slug="item.slug" />
-    <td>
-      <a :href="createMapLink(item.mapName)"
+  <tr 
+    :class="[altClass, 'replay']">
+    <team-row :team="item.team1" :slug="item.slug" />
+    <team-row :team="item.team2" :slug="item.slug" />
+    <td 
+      v-if="item.mapName">
+      <a :href="checkForMap"
         class="replay--map">
         {{ item.mapName }}
       </a>
     </td>
-    <td>{{ item.date }}</td>
+    <td
+      v-if="item.date">
+      {{ item.date }}
+    </td>
     <router-link
       tag="td"
       :to="{ name: 'replay', params: { slug: item.slug } }"
@@ -19,22 +24,28 @@
 </template>
 
 <script scoped>
-import Team from './Team.vue'
+import TeamRow from './TeamRow.vue'
 
 export default {
   name: 'ReplayRow',
   components: {
-    Team
+    TeamRow
   },
   props: {
     item: {
       type: Object,
       required: true,
+    },
+    search: {
+      type: String
+    },
+    altClass: {
+      type: String
     }
   },
   data() {
     return {
-      router: this.$router
+      router: this.$router,
     }
   },
   methods: {
@@ -42,6 +53,15 @@ export default {
       return 'https://liquipedia.net/starcraft2/' + mapName.split(' ').join('_');
     },
   },
+  computed: {
+    checkForMap: function() {
+      let mapLink = '';
+      if (this.item.mapName) {
+        mapLink = this.createMapLink(this.item.mapName);
+      }
+      return mapLink;
+    }
+  }
 }
 </script>
 
@@ -49,8 +69,11 @@ export default {
 .replay {
   transition: all .3s ease;
 }
+.replay.alt {
+  background-color: #2a4066;
+}
 .replay--details:hover, .replay--map:hover {
-  color: #a3be8c;
+  color: #32d082;
   cursor: pointer;
   transition: all .3s ease;
 }
