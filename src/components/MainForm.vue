@@ -47,15 +47,17 @@
               <v-btn
                 color="#7f428b"
                 class="register submit ma-2"
+                name="register"
                 :disabled="invalid"
-                @click="sendRegistrationRequest(username, password)">
+                @click="handleClick(username, password, $event)">
                 {{ registerBtnText }}
               </v-btn>
               <v-btn
                 color="#7f428b"
+                name="login"
                 class="submit ma-2"
                 :disabled="invalid"
-                @click="sendLoginRequest(username, password)">
+                @click="handleClick(username, password, $event)">
                 {{ loginBtnText }}
               </v-btn>
             </div>
@@ -74,8 +76,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'MainForm',
   data() {
@@ -109,48 +109,13 @@ export default {
       }
       return false;
     },
-    sendRegistrationRequest(username, password) {
-      if (this.validate(username, password)) {
-        axios.post('https://ladder-hero-api.honnold.me/auth/register', {
-          username: username,
-          password: password
-        })
-        .then(res => {
-          if (res.data.token) {
-            this.registerBtnText = 'Registered';
-            this.success = true;
-            this.$store.state.token = res.data.token;
-          }
-        })
-        .catch(res => {
-          this.loginBtnText = 'Uh Oh!';
-          this.error = true;
-          console.log(res.status);
-        });
-      } else {
-        this.invalid = true;
-      }
-    },
-    sendLoginRequest(username, password) {
-      if (this.validate(username, password)) {
-        axios.post('https://ladder-hero-api.honnold.me/auth/login', {
-          username: username,
-          password: password
-        })
-        .then(res => {
-          if (res.data.token) {
-            this.loginBtnText = 'Logged In';
-            this.success = true; 
-            this.$store.state.token = res.data.token;
-          }
-        })
-        .catch(res => {
-          this.loginBtnText = 'Uh Oh!';
-          this.error = true;
-          console.log(res.status);
-        });
-      } else {
-        this.invalid = true;
+    handleClick(username, password, event) {
+      if (event.target.getAttribute('name') === 'login') {
+        this.$store.dispatch('login', {username, password});
+        this.loginBtnText = 'Logged In';
+      } else if (event.target.getAttribute('name') === 'register') {
+        this.$store.dispatch('register', {username, password});
+        this.registerBtnText = 'Registered';
       }
     }
   },

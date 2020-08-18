@@ -30,11 +30,11 @@
           </v-list-item-content>
         </v-list-item>
       </router-link>
-      <router-link to="/login">
+      <router-link to="/">
         <v-list-item
           link>
           <v-list-item-content>
-            Login
+            {{ stateChangeText }}
           </v-list-item-content>
         </v-list-item>
       </router-link>
@@ -48,7 +48,8 @@
     data () {
       return {
         drawer: false,
-        top: true
+        top: true,
+        stateChangeText: this.$store.token ? 'Logout': 'Login'
       }
     },
     mounted() {

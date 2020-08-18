@@ -7,7 +7,8 @@
         <h1>
           Ladder Hero
         </h1>
-        <main-form></main-form>
+        <main-form
+          v-show="!getToken"></main-form>
       </v-col>
       <v-col
         xl="">
@@ -19,15 +20,22 @@
 </template>
 
 <script>
-import ReplaysTable from '@/components/ReplaysTable.vue'
-import MainForm from '@/components/MainForm.vue'
+import ReplaysTable from '@/components/ReplaysTable.vue';
+import MainForm from '@/components/MainForm.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
     ReplaysTable,
     MainForm
-  }
+  },
+  data () {
+    return {
+      
+    }
+  },
+  computed: mapGetters(['getToken']),
 }
 </script>
 
