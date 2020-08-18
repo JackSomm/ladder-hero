@@ -9,7 +9,7 @@
         <v-form
           ref="form">
           <v-text-field
-            v-model="password"
+            v-model="username"
             required
             label="Username"
             color="#d3cc65"
@@ -17,10 +17,10 @@
             outlined
             :rules="[rules.required]"
             :value="username"
-            @change="validate(username, password)">
+            @input="validate(username, password)">
           </v-text-field>
           <v-text-field
-            v-model="username"
+            v-model="password"
             color="#d3cc65"
             label="Password"
             hint="At least 8 characters"
@@ -32,7 +32,7 @@
             :type="show ? 'test': 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            @change="validate(username, password)">
+            @input="validate(username, password)">
           </v-text-field>
           <transition name="slide-fade">
             <v-card-text
@@ -102,14 +102,12 @@ export default {
         return true;
       }  else if (username && !password) {
         this.validationText = 'Please enter a password.';
-        return false;
       } else if (!username && password) {
         this.validationText = 'Please enter a username.';
-        return false;
       } else {
         this.validationText = 'At least enter something.';
-        return false;
       }
+      return false;
     },
     sendRegistrationRequest(username, password) {
       if (this.validate(username, password)) {
