@@ -109,6 +109,6 @@ export default {
   transition: all .3 ease;
 }
 .v-list-item:hover {
-  background-color: #2E2E2E;
+  background-color: #a7a046;
 }
 </style>

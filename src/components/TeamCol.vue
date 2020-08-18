@@ -137,7 +137,7 @@ h5 {
   font-weight: 400;
 }
 div.winner {
-  background-color: #2d6832;
+  background-color: #346438;
 }
 .team {
   background-color: #253858;
