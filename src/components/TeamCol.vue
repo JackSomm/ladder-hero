@@ -1,44 +1,37 @@
 <template>
   <v-container class="team"
     :class="{ 'winner': team[0].didWin }">
-    <div class="row">
-      <div 
-        class="col overall"
-        v-if="team.length > 1">
-        <div class="player__name">
-          <h4>
+    <div class="overflow">
+      <table class="team-table">
+        <tr class="team-table__row team-table__head">
+          <td class="team-table__title"></td>
+          <th class="team-table__header team-table__overall"
+            v-if="team.length > 1">
             Overall
-          </h4>
-        </div>
-        <div class="overall__data">
-          <div 
-            class="overall--item"
-            v-for="(stat, i) of overall"
-            :key="i">
-            <p>{{ i }}</p>
-            <h5>{{ stat }}</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col player"
-        :class="{ 'winner': player.didWin }"
-        v-for="player in team"
-        :key="player.name">
-        <div class="player__name">
-          <h4>
+          </th>
+          <th class="team-table__header"
+            v-for="player in team"
+            :key="player.name">
             {{ player.name }}
-          </h4>
-        </div>
-        <div class="player__data">
-          <div
-            class="player--item"
-            v-for="(stat, i) in organizePlayerStats(player)"
-            :key="i">
-            <p>{{ i }}</p>
-            <h5>{{ stat }}</h5>
-          </div>
-        </div>
-      </div>
+          </th>
+        </tr>
+        <tr
+          :class="[titles.indexOf(title) % 2 === 0 ? 'team-table__alt': '', 'team-table__row']"
+          v-for="title in titles"
+          :key="title">
+          <th class="team-table__title">
+            {{ title }}
+          </th>
+          <td class="team-table__stat">
+            {{ overall[title] }}
+          </td>
+          <td class="team-table__stat"
+            v-for="player in team"
+            :key="player.name">
+            {{ organizePlayerStats(player)[title] }}
+          </td>
+        </tr>
+      </table>
     </div>
   </v-container>
 </template>
@@ -84,7 +77,6 @@
             delete playerStats[key];
           }
         }
-
         for (let i in this.titles) {
           playerStats[this.titles[i]] = playerStats[this.stats[i]];
           delete playerStats[this.stats[i]];
@@ -114,47 +106,83 @@
   }
 </script>
 
-<style scoped>
-h4, h5, p {
-  margin-bottom: 0;
-}
-h4, h5 {
-  display: inline-block;
-  color: #e5e9f0;
-}
-p {
-  display: block;
-  font-size: .9rem;
-  font-weight: 700;
-  color: #f7f7f7;
-}
-h4 {
-  margin-bottom: 1em;
-  font-size: 1.3em;
-}
-h5 {
-  flex: 1;
-  font-weight: 400;
-}
+<style lang="scss" scoped>
 div.winner {
-  background-color: #346438;
+  background-color: #2e5731;
+}
+.overflow {
+  overflow-x: auto;
 }
 .team {
+  padding: 0;
   background-color: #253858;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
               0px 4px 5px 0px rgba(0, 0, 0, 0.14),
               0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5em;
 }
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: start;
+th {
+  text-align: left;
 }
-.col {
-  text-align: center;
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  &__row {
+    border-bottom: 1px solid #fff;
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+  &__header {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: .5em 0;
+    width: 7.6rem;
+  }
+  &__title {
+    padding: .4em 0 .4em 1em;
+    width: 12.4rem;
+    font-size: .85em;
+  }
+  &__stat {
+    padding: .6em .8em;
+    font-size: .85em;
+  }
+  &__alt {
+    background-color: #2a4066;
+  }
 }
-.player--item, .overall--item {
-  margin-bottom: 7px;
-  line-height: 1.1em;
+.winner tr.team-table__alt {
+  background-color: #426844;
+}
+th {
+  text-align: left;
+}
+@media only screen and (max-width: 450px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+  table, thead, tbody, th, td, tr { 
+		display: block; 
+  }
+  .team-table {
+    &__header {
+      width: 100%;
+    }
+    &__overall {
+      font-size: 1.4em;
+      border-bottom: 1px solid #eee;
+    }
+    &__title, &__stat {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+    &__stat {
+      border-bottom: 0;
+    }
+    &__title {
+      text-align: center;
+    }
+	}
 }
 </style>

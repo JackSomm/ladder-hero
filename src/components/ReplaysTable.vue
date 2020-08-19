@@ -12,9 +12,6 @@
       All Replays
     </h1>
     <v-card>
-      <v-card-title
-        class="table--header">
-      </v-card-title>
       <v-data-table
         :headers="headers"
         :items="replays"

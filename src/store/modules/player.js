@@ -2,35 +2,48 @@ import axios from 'axios';
 
 const state = {
   token: '',
+  failure: '',
 };
 
 const getters = {
-  getToken: state => state.token
+  getToken: state => state.token,
+  getFailure: state => state.failure
 };
 
 const actions = {
-  async register ({ commit }, { username, password }) {
-    axios.post('https://ladder-hero-api.honnold.me/auth/register', {
+  register ({ commit }, { username, password }) {
+    return axios.post('https://ladder-hero-api.honnold.me/auth/register', {
       username: username,
       password: password
     })
     .then(res => {
-      commit('setToken', res.data.token);
+      commit('SET_TOKEN', res.data.token);
+      return true;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
     });
   },
-  async login ({ commit }, { username, password }) {
-    axios.post('https://ladder-hero-api.honnold.me/auth/login', {
+  login ({ commit }, { username, password }) {
+    return axios.post('https://ladder-hero-api.honnold.me/auth/login', {
       username: username,
       password: password
     })
     .then(res => {
-      commit('setToken', res.data.token);
+      commit('SET_TOKEN', res.data.token);
+      return true;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
     });
   },
 };
 
 const mutations = {
-  setToken: (state, token) => state.token = token
+  SET_TOKEN: (state, token) => state.token = token,
+  SET_FAILURE: (state, failure) => state.failure = failure
 };
 
 export default {

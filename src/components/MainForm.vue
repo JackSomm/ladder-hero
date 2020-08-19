@@ -47,9 +47,8 @@
               <v-btn
                 color="#7f428b"
                 class="register submit ma-2"
-                name="register"
                 :disabled="invalid"
-                @click="handleClick(username, password, $event)">
+                @click="handleClick(username, password, 'register')">
                 {{ registerBtnText }}
               </v-btn>
               <v-btn
@@ -57,7 +56,7 @@
                 name="login"
                 class="submit ma-2"
                 :disabled="invalid"
-                @click="handleClick(username, password, $event)">
+                @click="handleClick(username, password, 'login')">
                 {{ loginBtnText }}
               </v-btn>
             </div>
@@ -110,12 +109,28 @@ export default {
       return false;
     },
     handleClick(username, password, event) {
-      if (event.target.getAttribute('name') === 'login') {
-        this.$store.dispatch('login', {username, password});
-        this.loginBtnText = 'Logged In';
-      } else if (event.target.getAttribute('name') === 'register') {
-        this.$store.dispatch('register', {username, password});
-        this.registerBtnText = 'Registered';
+      if (this.validate(username, password)) {
+        if (event === 'login') {
+          console.log('login');
+          this.$store.dispatch('login', {username, password})
+            .then(res => {
+              if (res === true) {
+                this.loginBtnText = 'Logged In';
+              } else {
+                this.error = true;
+              }
+            });
+        } else if (event === 'register') {
+          console.log('register');
+          this.$store.dispatch('register', {username, password})
+            .then(res => {
+              if (res === true) {
+                this.registerBtnText = 'Registered';
+              } else {
+                this.error = true;
+              }
+            });
+        }
       }
     }
   },
