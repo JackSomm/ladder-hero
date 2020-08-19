@@ -32,10 +32,10 @@ export default {
   },
   data () {
     return {
-      
+      loggedIn: false
     }
   },
-  computed: mapGetters(['getToken']),
+  computed: mapGetters(['getToken', 'getLoggedIn']),
 }
 </script>
 

@@ -30,14 +30,13 @@
           </v-list-item-content>
         </v-list-item>
       </router-link>
-      <router-link to="/">
-        <v-list-item
-          link>
-          <v-list-item-content>
-            {{ stateChangeText }}
-          </v-list-item-content>
-        </v-list-item>
-      </router-link>
+      <v-list-item
+        link
+        @click="handleStateChange()">
+        <v-list-item-content>
+          {{ stateChangeText }}
+        </v-list-item-content>
+      </v-list-item>
     </v-navigation-drawer>
   </div>
 </template>
@@ -49,11 +48,12 @@
       return {
         drawer: false,
         top: true,
-        stateChangeText: this.$store.token ? 'Logout': 'Login'
+        stateChangeText: 'Login'
       }
     },
     mounted() {
       window.addEventListener("scroll", this.onScroll);
+      this.stateChangeText = this.$store.getters.getLoggedIn ? 'Logout': 'Login';
     },
     beforeDestroy() {
       window.removeEventListener("scroll", this.onScroll);
@@ -64,6 +64,14 @@
           this.top = false;
         } else {
           this.top = true;
+        }
+      },
+      handleStateChange() {
+        if (this.stateChangeText === 'Login') {
+          this.$router.push('/');
+        } else if (this.stateChangeText === 'Logout') {
+          this.$store.commit('RESET_STATE');
+          location.reload();
         }
       }
     },

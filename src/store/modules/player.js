@@ -1,13 +1,16 @@
 import axios from 'axios';
 
-const state = {
-  token: '',
-  failure: '',
-};
+const reset = () => {
+  return {
+    token: '',
+    loggedIn: false
+  }
+}
+const state = reset();
 
 const getters = {
   getToken: state => state.token,
-  getFailure: state => state.failure
+  getLoggedIn: state => state.loggedIn,
 };
 
 const actions = {
@@ -17,7 +20,7 @@ const actions = {
       password: password
     })
     .then(res => {
-      commit('SET_TOKEN', res.data.token);
+      commit('SET_TOKEN_LOGIN', res.data.token);
       return true;
     })
     .catch(err => {
@@ -31,7 +34,7 @@ const actions = {
       password: password
     })
     .then(res => {
-      commit('SET_TOKEN', res.data.token);
+      commit('SET_TOKEN_LOGIN', res.data.token);
       return true;
     })
     .catch(err => {
@@ -39,11 +42,16 @@ const actions = {
       return false;
     });
   },
+  resetState ({ commit }) {
+    commit('RESET_STATE');
+  }
 };
 
 const mutations = {
-  SET_TOKEN: (state, token) => state.token = token,
-  SET_FAILURE: (state, failure) => state.failure = failure
+  SET_TOKEN_LOGIN: (state, token) => {
+    return state.loggedIn = true, state.token = token;
+  },
+  RESET_STATE: (state) => Object.assign(state, reset()),
 };
 
 export default {

@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <v-card
-      v-show="!success">
+      v-show="!getLoggedIn">
       <v-card-text>
         <p>
           You must register before uploading any replays.
@@ -75,6 +75,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'MainForm',
   data() {
@@ -134,6 +136,7 @@ export default {
       }
     }
   },
+  computed: mapGetters(['getLoggedIn'])
 }
 </script>
 
