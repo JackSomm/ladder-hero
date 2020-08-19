@@ -1,17 +1,17 @@
 <template>
-  <v-menu
+  <v-menu class="chart-select"
     offset-y>
     <template
       #activator="{ on, attrs }">
-      <v-btn
+      <v-btn class="chart-select__btn"
         color="#7f428b"
         v-on="on"
         v-bind="attrs">
         {{ current }}
       </v-btn>
     </template>
-    <v-list>
-      <v-list-item
+    <v-list class="chart-select__list">
+      <v-list-item class="chart-select__item"
         v-for="(option, i) in options"
         :key="i"
         v-ripple
@@ -94,21 +94,23 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-btn {
-  text-transform: none;
-  font-size: 0.929rem;
-  border-radius: 0;
-  min-height: 48px;
-}
-.v-list.v-sheet {
-  background-color: #253858;
-}
-.v-list-item {
-  cursor: pointer;
-  transition: all .3 ease;
-}
-.v-list-item:hover {
-  background-color: #a7a046;
+<style lang="scss" scoped>
+.chart-select {
+  &__btn {
+    text-transform: none;
+    font-size: 0.929rem;
+    border-radius: 0;
+    padding: 1.5em 1.1em!important;
+  }
+  &__list {
+    background-color: #253858;
+  }
+  &__item {
+    cursor: pointer;
+    transition: all .3 ease;
+    &:hover {
+      background-color: #a7a046;
+    }
+  }
 }
 </style>

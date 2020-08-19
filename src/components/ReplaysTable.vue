@@ -1,17 +1,17 @@
 <template v-slot:default>
-  <div>
+  <div class="replays">
     <router-link
       to="/replays"
       v-if="location === 'home'"
-      :class="{'header-link': location === 'home'}"
+      :class="[location === 'home' ? 'replays__link': '', 'replays__title']"
       tag="h1">
       All Replays
     </router-link>
-    <h1
+    <h1 class="replays__title"
       v-else>
       All Replays
     </h1>
-    <v-card>
+    <v-card class="replays__wrap">
       <v-data-table
         :headers="headers"
         :items="replays"
@@ -20,7 +20,7 @@
         :height="location === 'home' ? '600px': 'auto'"
         :search="search"
         calculate-widths
-        class="elevation-4">
+        class="elevation-4 replays__table">
         <template #item="{ item, search }">
           <replay-row
             :item="item"
@@ -108,33 +108,30 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.theme--dark.v-data-table,
-.theme--dark.v-card {
-  background-color: #253858;
-  border-radius: 0;
-}
-.theme--dark.v-data-table {
-  box-shadow: none !important;
-}
-.theme--dark.v-card {
-  box-shadow: none;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-              0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-              0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-}
-h1 {
-  color: #f7f7f7;
-  font-size: 3rem;
-  text-align: center;
-  margin: 2.3rem auto .7rem;
-  display: inline-block;
-}
-.header-link {
-  cursor: pointer;
-  transition: all .3s ease;
-}
-.header-link:hover {
-  color: #32d082;
+<style lang="scss" scoped>
+.replays {
+  &__link {
+    cursor: pointer;
+    transition: all .3s ease;
+    &:hover {
+      color: #32d082;
+    }
+  }
+  &__title {
+    color: #f7f7f7;
+    font-size: 3rem;
+    text-align: center;
+    margin: 2.3rem auto .7rem;
+    display: inline-block;
+  }
+  &__table {
+    background-color: #253858;
+    border-radius: 0;
+  }
+  &__wrap {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+                0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+                0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
 }
 </style>

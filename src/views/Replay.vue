@@ -4,18 +4,17 @@
       {{ mapName }}
     </h1>
     <v-row>
-      <div 
-        class="col team"
+      <v-col class="team-col"
         v-for="(team, i) in teamsObject"
         :key="i">
-        <h3>Team {{ i + 1 }}</h3>
+        <h3 class="team-col__title">Team {{ i + 1 }}</h3>
         <TeamCol :team="team" />
-      </div>
+      </v-col>
     </v-row>
     <div>
       <chart-select @selected="selectChart" />
     </div>
-    <div class="chart-wrap">
+    <div class="chart">
       <line-chart
         v-if="!loading"
         :data="changeChartData"
@@ -133,10 +132,10 @@ h1, h2, h3 {
   padding: 10px 0;
   color: #f7f7f7;
 }
-h1, .col {
+h1, .team-col {
   text-align: center;
 }
-.chart-wrap {
+.chart {
   width: 100%;
   height: 32rem;
   overflow: hidden;

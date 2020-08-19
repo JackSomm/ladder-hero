@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-app-bar 
+    <v-app-bar class="nav"
       app
       collapse-on-scroll>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <router-link to="/" class="header--link">
-        <v-toolbar-title>Ladder Hero</v-toolbar-title>
+        <v-toolbar-title class="nav__title">Ladder Hero</v-toolbar-title>
       </router-link>
     </v-app-bar>
     <v-navigation-drawer
@@ -83,20 +83,20 @@
   }
 </script>
 
-<style scoped>
-.v-toolbar__title {
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-.v-application a {
-  text-decoration: none;
-  color: #d8dee9;
-  transition: all .3s ease;
-}
-.v-application a:hover {
-  color: var(--v-anchor-base)!important;
-}
-.theme--dark.v-app-bar.v-toolbar.v-sheet {
-  background-color: #253858;
+<style lang="scss" scoped>
+.nav {
+  background-color: #253858!important;
+  a {
+    text-decoration: none;
+    color: #d8dee9;
+    transition: all .3s ease;
+    &:hover {
+      color: var(--v-anchor-base)!important;
+    }
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
 }
 </style>

@@ -7,8 +7,16 @@
         <h1>
           Ladder Hero
         </h1>
-        <main-form
-          v-show="!getToken"></main-form>
+        <transition class="fade">
+          <token-form
+            v-show="!getToken"
+            ></token-form>
+        </transition>
+        <transition class="fade">
+          <upload-form
+            v-show="getToken"
+            ></upload-form>
+        </transition>
       </v-col>
       <v-col
         xl="">
@@ -21,14 +29,16 @@
 
 <script>
 import ReplaysTable from '@/components/ReplaysTable.vue';
-import MainForm from '@/components/MainForm.vue';
+import TokenForm from '@/components/TokenForm.vue';
+import UploadForm from '@/components/UploadForm.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
     ReplaysTable,
-    MainForm
+    TokenForm,
+    UploadForm
   },
   data () {
     return {
@@ -39,9 +49,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   font-size: 5em;
   padding-left: 15px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+  transition-delay: .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

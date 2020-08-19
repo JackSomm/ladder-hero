@@ -22,7 +22,8 @@
           <th class="team-table__title">
             {{ title }}
           </th>
-          <td class="team-table__stat">
+          <td class="team-table__stat"
+            v-if="team.length > 1">
             {{ overall[title] }}
           </td>
           <td class="team-table__stat"
@@ -127,6 +128,7 @@ th {
 .team-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   &__row {
     border-bottom: 1px solid #fff;
     &:last-of-type {
@@ -137,11 +139,10 @@ th {
     text-align: center;
     font-size: 1.2rem;
     padding: .5em 0;
-    width: 7.6rem;
   }
   &__title {
     padding: .4em 0 .4em 1em;
-    width: 12.4rem;
+    // width: 12.4rem;
     font-size: .85em;
   }
   &__stat {

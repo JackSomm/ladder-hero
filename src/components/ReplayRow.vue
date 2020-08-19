@@ -6,7 +6,7 @@
     <td 
       v-if="item.mapName">
       <a :href="checkForMap"
-        class="replay--map">
+        class="replay__map">
         {{ item.mapName }}
       </a>
     </td>
@@ -17,7 +17,7 @@
     <router-link
       tag="td"
       :to="{ name: 'replay', params: { slug: item.slug } }"
-      class="replay--details">
+      class="replay__details">
       View Details
     </router-link>
   </tr>
@@ -65,16 +65,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .replay {
   transition: all .3s ease;
+  &__details:hover, &__map:hover {
+    color: #32d082;
+    cursor: pointer;
+    transition: all .3s ease;
+  }
 }
 .replay.alt {
   background-color: #2a4066;
-}
-.replay--details:hover, .replay--map:hover {
-  color: #32d082;
-  cursor: pointer;
-  transition: all .3s ease;
 }
 </style>
