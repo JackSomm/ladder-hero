@@ -39,31 +39,25 @@
             {{ validationText }}
           </v-card-text>
         </transition>
+        <v-btn
+          color="#7f428b"
+          class="token-form__register submit ma-2"
+          :disabled="invalid"
+          @click="handleClick(username, password, 'register')">
+          Register
+        </v-btn>
+        <v-btn
+          color="#7f428b"
+          name="login"
+          class="token-form__login ma-2"
+          :disabled="invalid"
+          @click="handleClick(username, password, 'login')">
+          Login
+        </v-btn>
         <transition name="slide-fade">
-          <div
-            v-show="!error">
-            <v-btn
-              color="#7f428b"
-              class="token-form__register submit ma-2"
-              :disabled="invalid"
-              @click="handleClick(username, password, 'register')">
-              {{ registerBtnText }}
-            </v-btn>
-            <v-btn
-              color="#7f428b"
-              name="login"
-              class="token-form__login ma-2"
-              :disabled="invalid"
-              @click="handleClick(username, password, 'login')">
-              {{ loginBtnText }}
-            </v-btn>
-          </div>
-        </transition>
-        <transition name="slide-fade">
-          <v-card-text
-            class="no-pad"
-            v-show="error">
-            There was a problem submitting your information. Please try again in a few minutes.
+          <v-card-text class="token-form__text token-form__auth"
+            v-show="unauthorized">
+            There's a problem with your login info. Please double check your username and password.
           </v-card-text>
         </transition>
       </v-form>
@@ -79,10 +73,8 @@ export default {
       username: '',
       password: '',
       show: false,
-      registerBtnText: 'Register',
-      loginBtnText: 'Login',
       success: false,
-      error: false,
+      unauthorized: false,
       validationText: '',
       invalid: false,
       rules: {
@@ -96,7 +88,7 @@ export default {
         this.invalid = false;
         this.validationText = '';
         return true;
-      }  else if (username && !password) {
+      } else if (username && !password) {
         this.validationText = 'Please enter a password.';
       } else if (!username && password) {
         this.validationText = 'Please enter a username.';
@@ -110,25 +102,29 @@ export default {
         if (event === 'login') {
           this.$store.dispatch('login', {username, password})
             .then(res => {
-              if (res === true) {
-                this.loginBtnText = 'Logged In';
-              } else {
-                this.error = true;
+              if (!res) {
+                this.unauthorized = true;
               }
             });
         } else if (event === 'register') {
           this.$store.dispatch('register', {username, password})
             .then(res => {
-              if (res === true) {
-                this.registerBtnText = 'Registered';
-              } else {
-                this.error = true;
+              if (!res) {
+                this.unauthorized = true;
               }
             });
         }
       }
-    }
+    },
   },
+  beforeDestroy() {
+    if (this.$store.getters.getToken) {
+      this.registerBtnText = 'Register';
+      this.loginBtnText = 'Login';
+      this.password = '';
+      this.username = '';
+    }
+  }
 }
 </script>
 
@@ -142,6 +138,9 @@ export default {
   }
   &__text {
     padding-left: 0;
+  }
+  &__unauthorized {
+    color: red;
   }
 }
 .slide-fade-enter-active {

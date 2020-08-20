@@ -7,21 +7,22 @@
       </p>
       <v-file-input class="upload-form__input"
         label="Upload a Replay"
-        v-model="file"
+        v-model="files"
         color="#d3cc65"
         outlined
         chips
-        :value="file"></v-file-input>
+        multiple
+        :value="files"></v-file-input>
       <v-btn
         color="#7f428b"
         class="upload-form__btn submit ma-2"
-        @click="upload(file)">
+        @click="upload(files)">
         {{ uploadBtnText }}
       </v-btn>
       </v-card-text>
     </v-card>
     <p class="logout"
-      @click="logout()">
+      @click="$store.commit('RESET_STATE')">
       Logout
     </p>
   </div>
@@ -34,27 +35,35 @@ export default {
   name: 'UploadForm',
   data () {
     return {
-      file: null,
+      files: null,
       uploadBtnText: 'Upload'
     }
   },
   methods: {
-    upload(file) {
-      axios.post('https://ladder-hero-api.honnold.me/files/upload', {
-        replay: file
-      })
-      .then(res => {
-        console.log(res)
+    upload(files) {
+      const formData = new FormData();
+      for (let file of files) {
+        formData.append('files', file);
+      }
+      const config = {
+        headers: { 
+          Authorization: `Bearer ${this.$store.getters.getToken}`,
+          'content-type': 'multipart/form-data',
+        }
+      }
+      axios.post(
+        'https://ladder-hero-api.honnold.me/files/upload',
+        formData,
+        config
+      )
+      .then(() => {
+        this.files = null;
+        
       })
       .catch(err => {
         console.log(err);
-
       });
     },
-    logout() {
-      this.$store.commit('RESET_STATE');
-      // location.reload();
-    }
   }
 }
 </script>

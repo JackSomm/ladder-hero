@@ -41,8 +41,7 @@ export default {
     UploadForm
   },
   data () {
-    return {
-    }
+    return {}
   },
   computed: mapGetters(['getToken', 'getLoggedIn']),
 }
@@ -58,7 +57,7 @@ h1 {
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity .4s ease;
-  transition-delay: .6s;
+  transition-delay: .7s;
   position: absolute;
   width: 96%;
 }
