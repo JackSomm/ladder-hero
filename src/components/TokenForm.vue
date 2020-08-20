@@ -72,8 +72,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   name: 'MainForm',
   data() {
@@ -110,7 +108,6 @@ export default {
     handleClick(username, password, event) {
       if (this.validate(username, password)) {
         if (event === 'login') {
-          console.log('login');
           this.$store.dispatch('login', {username, password})
             .then(res => {
               if (res === true) {
@@ -120,7 +117,6 @@ export default {
               }
             });
         } else if (event === 'register') {
-          console.log('register');
           this.$store.dispatch('register', {username, password})
             .then(res => {
               if (res === true) {
@@ -133,7 +129,6 @@ export default {
       }
     }
   },
-  computed: mapGetters(['getLoggedIn'])
 }
 </script>
 

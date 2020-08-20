@@ -2,19 +2,19 @@
   <v-container>
     <v-row
       justify="space-between">
-      <v-col
+      <v-col class="forms"
         xl="4">
         <h1>
           Ladder Hero
         </h1>
-        <transition class="fade">
+        <transition name="fade">
           <token-form
-            v-show="!getToken"
+            v-if="!getToken"
             ></token-form>
         </transition>
-        <transition class="fade">
+        <transition name="fade">
           <upload-form
-            v-show="getToken"
+            v-if="getToken"
             ></upload-form>
         </transition>
       </v-col>
@@ -42,7 +42,6 @@ export default {
   },
   data () {
     return {
-      loggedIn: false
     }
   },
   computed: mapGetters(['getToken', 'getLoggedIn']),
@@ -54,9 +53,14 @@ h1 {
   font-size: 5em;
   padding-left: 15px;
 }
+.forms {
+  position: relative;
+}
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-  transition-delay: .5s;
+  transition: opacity .4s ease;
+  transition-delay: .6s;
+  position: absolute;
+  width: 96%;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
