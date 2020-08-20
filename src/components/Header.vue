@@ -15,7 +15,7 @@
       <router-link 
         to="/"
         v-show="!top">
-        <v-list-item
+        <v-list-item class="nav__link"
           link>
           <v-list-item-content>
             Home
@@ -23,14 +23,14 @@
         </v-list-item>
       </router-link>
       <router-link to="/upload">
-        <v-list-item
+        <v-list-item class="nav__link"
           link>
           <v-list-item-content>
             Upload
           </v-list-item-content>
         </v-list-item>
       </router-link>
-      <v-list-item
+      <v-list-item class="nav__link"
         link
         @click="handleStateChange()">
         <v-list-item-content>
@@ -86,8 +86,7 @@
 <style lang="scss" scoped>
 .nav {
   background-color: #253858!important;
-  a {
-    text-decoration: none;
+  &__link, a {
     color: #d8dee9;
     transition: all .3s ease;
     &:hover {
@@ -98,5 +97,8 @@
     font-weight: 700;
     font-size: 1.5rem;
   }
+}
+.v-application a {
+  text-decoration: none;
 }
 </style>
