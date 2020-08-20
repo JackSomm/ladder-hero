@@ -118,12 +118,10 @@ export default {
     },
   },
   beforeDestroy() {
-    if (this.$store.getters.getToken) {
-      this.registerBtnText = 'Register';
-      this.loginBtnText = 'Login';
-      this.password = '';
-      this.username = '';
-    }
+    this.registerBtnText = 'Register';
+    this.loginBtnText = 'Login';
+    this.password = '';
+    this.username = '';
   }
 }
 </script>
