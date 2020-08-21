@@ -14,9 +14,7 @@
           name="username"
           outlined
           :rules="[rules.required]"
-          :value="username"
-          @input="validate(username, password)">
-        </v-text-field>
+          :value="username"></v-text-field>
         <v-text-field
           v-model="password"
           color="#d3cc65"
@@ -29,9 +27,7 @@
           :value="password"
           :type="show ? 'test': 'password'"
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="show = !show"
-          @input="validate(username, password)">
-        </v-text-field>
+          @click:append="show = !show"></v-text-field>
         <transition name="slide-fade">
           <v-card-text
             class="token-form__text"
@@ -57,7 +53,7 @@
         <transition name="slide-fade">
           <v-card-text class="token-form__text token-form__auth"
             v-show="unauthorized">
-            There's a problem with your login info. Please double check your username and password.
+            {{ unauthorizedText }}
           </v-card-text>
         </transition>
       </v-form>
@@ -76,6 +72,7 @@ export default {
       unauthorized: false,
       validationText: '',
       invalid: false,
+      unauthorizedText: '',
       rules: {
         required: value => !!value || 'Required.'
       },
@@ -102,6 +99,7 @@ export default {
           this.$store.dispatch('login', {username, password})
             .then(res => {
               if (!res) {
+                this.unauthorizedText = "There's a problem with your login info. Please double check your username and password.";
                 this.unauthorized = true;
               } else {
                 this.$emit('close');
@@ -111,6 +109,7 @@ export default {
           this.$store.dispatch('register', {username, password})
             .then(res => {
               if (!res) {
+                this.unauthorizedText = "Someone is using that username.";
                 this.unauthorized = true;
               } else {
                 this.$emit('close');
