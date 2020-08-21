@@ -56,9 +56,11 @@ export default {
         formData,
         config
       )
-      .then(() => {
-        this.files = null;
-        
+      .then(res => {
+        if (res.status === 200) {
+          this.files = null;
+          this.$emit('close');
+        }
       })
       .catch(err => {
         console.log(err);

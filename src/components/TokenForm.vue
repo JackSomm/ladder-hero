@@ -73,7 +73,6 @@ export default {
       username: '',
       password: '',
       show: false,
-      success: false,
       unauthorized: false,
       validationText: '',
       invalid: false,
@@ -104,6 +103,8 @@ export default {
             .then(res => {
               if (!res) {
                 this.unauthorized = true;
+              } else {
+                this.$emit('close');
               }
             });
         } else if (event === 'register') {
@@ -111,6 +112,8 @@ export default {
             .then(res => {
               if (!res) {
                 this.unauthorized = true;
+              } else {
+                this.$emit('close');
               }
             });
         }

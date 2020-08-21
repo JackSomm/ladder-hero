@@ -22,14 +22,12 @@
           </v-list-item-content>
         </v-list-item>
       </router-link>
-      <router-link to="/upload">
-        <v-list-item class="nav__link"
-          link>
-          <v-list-item-content>
-            Upload
-          </v-list-item-content>
-        </v-list-item>
-      </router-link>
+      <v-list-item class="nav__link"
+        @click="$emit('clicked', 'upload')">
+        <v-list-item-content>
+          Upload
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item class="nav__link"
         link
         @click="handleStateChange()">
@@ -68,7 +66,8 @@
       },
       handleStateChange() {
         if (this.stateChangeText === 'Login') {
-          this.$router.push('/');
+          this.$emit('clicked', 'login');
+          this.stateChangeText = 'Logout';
         } else if (this.stateChangeText === 'Logout') {
           this.$store.commit('RESET_STATE');
           location.reload();

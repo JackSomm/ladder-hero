@@ -25,9 +25,9 @@
 
 <script>
   import axios from 'axios'
-  import TeamCol from '../components/TeamCol.vue'
-  import LineChart from '../components/LineChart.vue'
-  import ChartSelect from '../components/ChartSelect.vue'
+  import TeamCol from '@/components/TeamCol.vue'
+  import LineChart from '@/components/LineChart.vue'
+  import ChartSelect from '@/components/ChartSelect.vue'
   import groupBy from 'lodash/groupBy'
   import values from 'lodash/values'
   import sortBy from 'lodash/sortBy'
@@ -39,7 +39,7 @@
     components: {
       TeamCol,
       LineChart,
-      ChartSelect
+      ChartSelect,
     },
     props: {
       slug: {
