@@ -62,7 +62,7 @@ export default {
   },
   beforeCreate () {
     axios
-      .get('https://ladder-hero-api.honnold.me/api/v1/replays')
+      .get('https://api.ladder-hero.com/api/v1/replays')
       .then(res => {
         let formatedReplays = [];
         if (this.location !== 'home') {

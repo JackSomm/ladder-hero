@@ -90,7 +90,7 @@
       },
     },
     mounted() {
-      axios.get(`https://ladder-hero-api.honnold.me/api/v1/replays/${this.slug}`)
+      axios.get(`https://api.ladder-hero.com/api/v1/replays/${this.slug}`)
         .then((res) => {
           this.teamsObject = values(groupBy(res.data.players, 'teamId'));
           this.players = res.data.players;

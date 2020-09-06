@@ -15,7 +15,7 @@ const getters = {
 
 const actions = {
   register ({ commit }, { username, password }) {
-    return axios.post('https://ladder-hero-api.honnold.me/auth/register', {
+    return axios.post('https://api.ladder-hero.com/auth/register', {
       username: username,
       password: password
     })
@@ -29,7 +29,7 @@ const actions = {
     });
   },
   login ({ commit }, { username, password }) {
-    return axios.post('https://ladder-hero-api.honnold.me/auth/login', {
+    return axios.post('https://api.ladder-hero.com/auth/login', {
       username: username,
       password: password
     })

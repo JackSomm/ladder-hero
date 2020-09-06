@@ -52,7 +52,7 @@ export default {
         }
       }
       axios.post(
-        'https://ladder-hero-api.honnold.me/files/upload',
+        'https://api.ladder-hero.com/files/upload',
         formData,
         config
       )
